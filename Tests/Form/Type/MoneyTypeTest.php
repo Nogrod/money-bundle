@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
  *
  * @author Jakub Kucharovic <jakub@kucharovic.cz>
  */
-class MoneyTypeTest extends TypeTestCase
+final class MoneyTypeTest extends TypeTestCase
 {
     protected function setUp(): void
     {
@@ -27,7 +27,7 @@ class MoneyTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    public function testPassLocalizedMoneyPatternToView()
+    public function testPassLocalizedMoneyPatternToView(): void
     {
         \Locale::setDefault('cs_CZ');
 
@@ -36,7 +36,7 @@ class MoneyTypeTest extends TypeTestCase
         $this->assertSame('{{ widget }} Kč', $view->vars['money_pattern']);
     }
 
-    public function testPassMoneyPatternToView()
+    public function testPassMoneyPatternToView(): void
     {
         \Locale::setDefault('en_US');
 
@@ -45,20 +45,20 @@ class MoneyTypeTest extends TypeTestCase
         $this->assertSame('CZK {{ widget }}', $view->vars['money_pattern']);
     }
 
-    public function testPassOverriddenMoneyPatternToView()
+    public function testPassOverriddenMoneyPatternToView(): void
     {
         $view = $this->factory->create(MoneyType::class, null, ['currency' => new Currency('EUR')])->createView();
 
         $this->assertSame('€ {{ widget }}', $view->vars['money_pattern']);
     }
 
-    public function testPassWrongTypedCurrencies()
+    public function testPassWrongTypedCurrencies(): void
     {
         $this->expectException(InvalidOptionsException::class);
         $this->factory->create(MoneyType::class, null, ['currencies' => ['EUR']]);
     }
 
-    public function testPassWrongTypedCurrency()
+    public function testPassWrongTypedCurrency(): void
     {
         $this->expectException(InvalidOptionsException::class);
         $this->factory->create(MoneyType::class, null, ['currency' => 123]);

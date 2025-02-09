@@ -20,11 +20,11 @@ use Money\Money;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Intl\Util\IntlTestHelper;
 
-class MoneyToLocalizedStringTransformerTest extends TestCase
+final class MoneyToLocalizedStringTransformerTest extends TestCase
 {
-    public function dataProvider()
+    public function dataProvider(): array
     {
-        $data = [
+        return [
             ['cs_CZ', new Currency('CZK'), 2, false, 1599, '15,99', null],
             ['cs_CZ', new Currency('CZK'), 2, false, 999999, '9999,99', null],
             ['cs_CZ', new Currency('CZK'), 2, true, 999999, '9 999,99', null],
@@ -34,14 +34,12 @@ class MoneyToLocalizedStringTransformerTest extends TestCase
             ['en_US', new Currency('XBT'), 8, true, 999999, '0.00999999', new BitcoinCurrencies()],
             ['en_US', new Currency('XBT'), 8, true, 1, '0.00000001', new BitcoinCurrencies()],
         ];
-
-        return $data;
     }
 
     /**
      * @dataProvider dataProvider
      */
-    public function testDataReverseTransform($locale, $currency, $scale, $grouping, $input, $output, $currencies)
+    public function testDataReverseTransform(string $locale, \Money\Money\Currency $currency, int $scale, bool $grouping, int $input, string $output, ?\Money\Money\Currencies\BitcoinCurrencies $currencies): void
     {
         IntlTestHelper::requireFullIntl($this, false);
 
@@ -56,7 +54,7 @@ class MoneyToLocalizedStringTransformerTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testDataTransform($locale, $currency, $scale, $grouping, $input, $output, $currencies)
+    public function testDataTransform(string $locale, \Money\Money\Currency $currency, int $scale, bool $grouping, int $input, string $output, ?\Money\Money\Currencies\BitcoinCurrencies $currencies): void
     {
         IntlTestHelper::requireFullIntl($this, false);
 

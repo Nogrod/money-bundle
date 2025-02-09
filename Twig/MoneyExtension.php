@@ -18,7 +18,9 @@ use Twig\TwigFilter;
 class MoneyExtension extends AbstractExtension
 {
     final public const FORMAT_CURRENCY = true;
+
     final public const FORMAT_DECIMAL = false;
+
     final public const GROUPING_NONE = false;
 
     final public const GROUPING_USED = true;
@@ -35,11 +37,8 @@ class MoneyExtension extends AbstractExtension
     }
 
     /**
-     * @param Money $money
-     * @param int $scale
      * @param true $groupingUsed
      * @param true $format
-     * @return array|string
      */
     public function moneyFilter(Money $money, int $scale = 2, bool $groupingUsed = self::GROUPING_USED, bool $format = self::FORMAT_CURRENCY): array|string
     {

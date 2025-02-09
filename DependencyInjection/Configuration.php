@@ -17,7 +17,7 @@ use Symfony\Component\Intl\Languages;
 class Configuration implements ConfigurationInterface
 {
     /** @var string * */
-    private $currencyCode;
+    private string $currencyCode;
 
     /**
      * @param string $locale Locale for currency code
@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
             : Languages::getLanguageCodes();
 
         if (false === \in_array($locale, $locales, true)) {
-            throw new InvalidConfigurationException("Locale '$locale' is not valid.");
+            throw new InvalidConfigurationException(sprintf("Locale '%s' is not valid.", $locale));
         }
 
         if (2 === \mb_strlen($locale)) {

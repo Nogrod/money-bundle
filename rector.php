@@ -4,42 +4,52 @@ declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
+use Rector\Doctrine\Set\DoctrineSetList;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Symfony\Set\SymfonySetList;
-use Rector\Symfony\Symfony42\Rector\MethodCall\ContainerGetToConstructorInjectionRector;
 use Rector\Symfony\Symfony44\Rector\ClassMethod\ConsoleExecuteReturnIntRector;
-use Rector\Symfony\Symfony53\Rector\Class_\CommandDescriptionToPropertyRector;
 use Rector\Symfony\Symfony61\Rector\Class_\CommandPropertyToAttributeRector;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->paths([
-        __DIR__.'/DependencyInjection',
-        __DIR__.'/Form',
-        __DIR__.'/Tests',
-        __DIR__.'/Twig',
-    ]);
+return RectorConfig::configure()
+    ->withPaths([
+                    __DIR__.'/DependencyInjection',
+                    __DIR__.'/Form',
+                    __DIR__.'/Tests',
+                    __DIR__.'/Twig',
+                ])
+    ->withSkip([
+                   RemoveUnusedPrivateMethodRector::class,
+               ])
+    ->withAttributesSets()
+    ->withPreparedSets(
+        deadCode:           true,
+        codeQuality:        true,
+        codingStyle:        true,
+        typeDeclarations:   true,
+        //naming: true,
+        rectorPreset:       true,
+        symfonyCodeQuality: true,
+        symfonyConfigs:     true,
+    )
+    ->withRules([
+                    InlineConstructorDefaultToPropertyRector::class,
+                    ClassPropertyAssignToConstructorPromotionRector::class,
+                    CommandPropertyToAttributeRector::class,
+                    ConsoleExecuteReturnIntRector::class
+                ])
+    ->withSets([
+                   LevelSetList::UP_TO_PHP_84,
 
-    // register a single rule
-    $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
-    $rectorConfig->rule(ClassPropertyAssignToConstructorPromotionRector::class);
-    $rectorConfig->rule(CommandDescriptionToPropertyRector::class);
-    $rectorConfig->rule(CommandPropertyToAttributeRector::class);
-    $rectorConfig->rule(ConsoleExecuteReturnIntRector::class);
-    $rectorConfig->rule(ContainerGetToConstructorInjectionRector::class);
+                   PHPUnitSetList::PHPUNIT_90,
 
-    // define sets of rules
-    $rectorConfig->sets([
-        // LevelSetList::UP_TO_PHP_80
-        LevelSetList::UP_TO_PHP_82,
+                   SymfonySetList::SYMFONY_72,
+                   SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
 
-        PHPUnitSetList::PHPUNIT_90,
-
-        // SetList::CODE_QUALITY,
-
-        SymfonySetList::SYMFONY_64,
-        SymfonySetList::SYMFONY_CODE_QUALITY,
-        SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
-    ]);
-};
+                   DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
+                   DoctrineSetList::DOCTRINE_DBAL_40,
+                   DoctrineSetList::DOCTRINE_ORM_300,
+                   DoctrineSetList::DOCTRINE_CODE_QUALITY,
+               ]);

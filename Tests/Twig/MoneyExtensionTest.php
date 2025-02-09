@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Intl\Util\IntlTestHelper;
 use Twig\TwigFilter;
 
-class MoneyExtensionTest extends TestCase
+final class MoneyExtensionTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -19,7 +19,7 @@ class MoneyExtensionTest extends TestCase
         parent::setUp();
     }
 
-    public function dataProvider()
+    public function dataProvider(): array
     {
         return [
             ['cs_CZ', 'CZK', 2, MoneyExtension::GROUPING_USED, MoneyExtension::FORMAT_CURRENCY, 1599, '15,99 Kč'],
@@ -34,7 +34,7 @@ class MoneyExtensionTest extends TestCase
         ];
     }
 
-    public function testGetFilters()
+    public function testGetFilters(): void
     {
         $extension = new MoneyExtension('cs_CZ');
 
@@ -47,7 +47,7 @@ class MoneyExtensionTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testMoneyFilter($locale, $currency, $scale, $grouping, $format, $input, $output)
+    public function testMoneyFilter(string $locale, string $currency, int $scale, bool $grouping, bool $format, int $input, string $output): void
     {
         \Locale::setDefault($locale);
         $extension = new MoneyExtension($locale);

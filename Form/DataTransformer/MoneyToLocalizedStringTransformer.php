@@ -53,8 +53,8 @@ class MoneyToLocalizedStringTransformer implements DataTransformerInterface
         $value = $this->numberToLocalizedStringTransformer->reverseTransform($value);
         try {
             return $this->decimalMoneyParser->parse(sprintf('%.53f', $value), $this->currency);
-        } catch (ParserException $e) {
-            throw new TransformationFailedException($e->getMessage());
+        } catch (ParserException $parserException) {
+            throw new TransformationFailedException($parserException->getMessage());
         }
     }
 
