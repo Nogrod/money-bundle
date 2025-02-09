@@ -30,7 +30,7 @@ class MoneyToLocalizedStringTransformer implements DataTransformerInterface
 
     private readonly NumberToLocalizedStringTransformer $numberToLocalizedStringTransformer;
 
-    public function __construct(private readonly Currency $currency, int $scale = null, ?bool $grouping = false, Currencies $currencies = null)
+    public function __construct(private readonly Currency $currency, ?int $scale = null, ?bool $grouping = false, ?Currencies $currencies = null)
     {
         $this->currencies = $currencies ?: new ISOCurrencies();
         $this->numberToLocalizedStringTransformer = new NumberToLocalizedStringTransformer($scale, $grouping);
@@ -52,7 +52,7 @@ class MoneyToLocalizedStringTransformer implements DataTransformerInterface
     {
         $value = $this->numberToLocalizedStringTransformer->reverseTransform($value);
         try {
-            return $this->decimalMoneyParser->parse(sprintf('%.53f', $value), $this->currency);
+            return $this->decimalMoneyParser->parse(\sprintf('%.53f', $value), $this->currency);
         } catch (ParserException $parserException) {
             throw new TransformationFailedException($parserException->getMessage());
         }

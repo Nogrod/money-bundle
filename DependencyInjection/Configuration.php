@@ -29,10 +29,10 @@ class Configuration implements ConfigurationInterface
             : Languages::getLanguageCodes();
 
         if (false === \in_array($locale, $locales, true)) {
-            throw new InvalidConfigurationException(sprintf("Locale '%s' is not valid.", $locale));
+            throw new InvalidConfigurationException(\sprintf("Locale '%s' is not valid.", $locale));
         }
 
-        if (2 === \mb_strlen($locale)) {
+        if (2 === mb_strlen($locale)) {
             // Default US dollars
             $locale .= '_US';
         }

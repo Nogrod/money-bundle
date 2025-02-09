@@ -15,41 +15,41 @@ use Rector\Symfony\Symfony61\Rector\Class_\CommandPropertyToAttributeRector;
 
 return RectorConfig::configure()
     ->withPaths([
-                    __DIR__.'/DependencyInjection',
-                    __DIR__.'/Form',
-                    __DIR__.'/Tests',
-                    __DIR__.'/Twig',
-                ])
+        __DIR__.'/DependencyInjection',
+        __DIR__.'/Form',
+        __DIR__.'/Tests',
+        __DIR__.'/Twig',
+    ])
     ->withSkip([
-                   RemoveUnusedPrivateMethodRector::class,
-               ])
+        RemoveUnusedPrivateMethodRector::class,
+    ])
     ->withAttributesSets()
     ->withPreparedSets(
-        deadCode:           true,
-        codeQuality:        true,
-        codingStyle:        true,
-        typeDeclarations:   true,
-        //naming: true,
-        rectorPreset:       true,
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
+        typeDeclarations: true,
+        // naming: true,
+        rectorPreset: true,
         symfonyCodeQuality: true,
-        symfonyConfigs:     true,
+        symfonyConfigs: true,
     )
     ->withRules([
-                    InlineConstructorDefaultToPropertyRector::class,
-                    ClassPropertyAssignToConstructorPromotionRector::class,
-                    CommandPropertyToAttributeRector::class,
-                    ConsoleExecuteReturnIntRector::class
-                ])
+        InlineConstructorDefaultToPropertyRector::class,
+        ClassPropertyAssignToConstructorPromotionRector::class,
+        CommandPropertyToAttributeRector::class,
+        ConsoleExecuteReturnIntRector::class,
+    ])
     ->withSets([
-                   LevelSetList::UP_TO_PHP_84,
+        LevelSetList::UP_TO_PHP_84,
 
-                   PHPUnitSetList::PHPUNIT_90,
+        PHPUnitSetList::PHPUNIT_90,
 
-                   SymfonySetList::SYMFONY_72,
-                   SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
+        SymfonySetList::SYMFONY_72,
+        SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
 
-                   DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
-                   DoctrineSetList::DOCTRINE_DBAL_40,
-                   DoctrineSetList::DOCTRINE_ORM_300,
-                   DoctrineSetList::DOCTRINE_CODE_QUALITY,
-               ]);
+        DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES,
+        DoctrineSetList::DOCTRINE_DBAL_40,
+        DoctrineSetList::DOCTRINE_ORM_300,
+        DoctrineSetList::DOCTRINE_CODE_QUALITY,
+    ]);

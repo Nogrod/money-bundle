@@ -39,7 +39,7 @@ final class MoneyToLocalizedStringTransformerTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testDataReverseTransform(string $locale, \Money\Money\Currency $currency, int $scale, bool $grouping, int $input, string $output, ?\Money\Money\Currencies\BitcoinCurrencies $currencies): void
+    public function testDataReverseTransform(string $locale, Money\Currency $currency, int $scale, bool $grouping, int $input, string $output, ?Money\Currencies\BitcoinCurrencies $currencies): void
     {
         IntlTestHelper::requireFullIntl($this, false);
 
@@ -54,7 +54,7 @@ final class MoneyToLocalizedStringTransformerTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testDataTransform(string $locale, \Money\Money\Currency $currency, int $scale, bool $grouping, int $input, string $output, ?\Money\Money\Currencies\BitcoinCurrencies $currencies): void
+    public function testDataTransform(string $locale, Money\Currency $currency, int $scale, bool $grouping, int $input, string $output, ?Money\Currencies\BitcoinCurrencies $currencies): void
     {
         IntlTestHelper::requireFullIntl($this, false);
 

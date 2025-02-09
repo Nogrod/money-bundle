@@ -54,7 +54,7 @@ class MoneyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['currency' => $this->currency, 'scale' => 2, 'grouping' => false, 'compound' => false, 'currencies' => null]);
-        $resolver->setNormalizer('currency', function (OptionsResolver $resolver, $currency): \Money\Currency {
+        $resolver->setNormalizer('currency', function (OptionsResolver $resolver, $currency): Currency {
             if (!$currency instanceof Currency) {
                 @trigger_error('Passing a currency as string is deprecated since 1.1 and will be removed in 2.0. Please pass a '.Currency::class.' instance instead.', \E_USER_DEPRECATED);
                 $currency = new Currency($currency);
@@ -105,9 +105,9 @@ class MoneyType extends AbstractType
 
             preg_match('/^([^\s\xc2\xa0]*)[\s\xc2\xa0]*123(?:[,.]0+)?[\s\xc2\xa0]*([^\s\xc2\xa0]*)$/u', $pattern, $matches);
 
-            if (isset($matches[1]) && ($matches[1] !== '' && $matches[1] !== '0')) {
+            if (isset($matches[1]) && ('' !== $matches[1] && '0' !== $matches[1])) {
                 self::$patterns[$locale][$currency] = $matches[1].' {{ widget }}';
-            } elseif (isset($matches[2]) && ($matches[2] !== '' && $matches[2] !== '0')) {
+            } elseif (isset($matches[2]) && ('' !== $matches[2] && '0' !== $matches[2])) {
                 self::$patterns[$locale][$currency] = '{{ widget }} '.$matches[2];
             } else {
                 self::$patterns[$locale][$currency] = '{{ widget }}';
