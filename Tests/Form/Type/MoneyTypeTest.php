@@ -64,7 +64,7 @@ final class MoneyTypeTest extends TypeTestCase
         $this->factory->create(MoneyType::class, null, ['currency' => 123]);
     }
 
-    protected function getExtensions()
+    protected function getExtensions(): array
     {
         return [
             new PreloadedExtension([

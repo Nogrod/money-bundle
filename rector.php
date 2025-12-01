@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
@@ -18,7 +17,8 @@ return RectorConfig::configure()
         __DIR__.'/Twig',
     ])
     ->withSkip([
-        RemoveUnusedPrivateMethodRector::class,
+       __DIR__.'/vendor',
+       RemoveUnusedPrivateMethodRector::class,
     ])
     ->withAttributesSets()
     ->withPreparedSets(
@@ -38,7 +38,6 @@ return RectorConfig::configure()
         symfony: true,
     )
     ->withRules([
-        InlineConstructorDefaultToPropertyRector::class,
         ClassPropertyAssignToConstructorPromotionRector::class,
         CommandPropertyToAttributeRector::class,
         ConsoleExecuteReturnIntRector::class,
