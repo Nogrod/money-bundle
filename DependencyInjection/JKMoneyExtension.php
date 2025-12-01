@@ -23,8 +23,8 @@ class JKMoneyExtension extends Extension implements PrependExtensionInterface
         $configuration = new Configuration($locale);
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+        $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.php');
 
         if (interface_exists(\Symfony\Component\Form\FormInterface::class)) {
             $formType = $container->getDefinition(\JK\MoneyBundle\Form\Type\MoneyType::class);
